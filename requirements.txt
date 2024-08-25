@@ -5,5 +5,11 @@ scikit-learn
 seaborn
 Flask
 dill
+astropy
+statsmodels
+scipy
+xgboost
+catboost
+StandardScaler
 
 -e .
