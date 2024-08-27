@@ -10,6 +10,7 @@ statsmodels
 scipy
 xgboost
 catboost
-StandardScaler
+dagshub
+mlflow
 
 -e .

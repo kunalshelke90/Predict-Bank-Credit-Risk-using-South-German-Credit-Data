@@ -23,6 +23,7 @@ class DataIngestion:
         try:    
         #datastaxx code
         
+        
             df=pd.read_csv(os.path.join('notebook','South_German_Credit.csv'))
             logging.info(f"Dataset shape: {df.shape}")
     
