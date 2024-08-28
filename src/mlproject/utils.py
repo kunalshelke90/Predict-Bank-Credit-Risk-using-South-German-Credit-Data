@@ -4,7 +4,28 @@ import pickle
 from src.mlproject.exception import CustomException
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
+import pandas as pd
 
+from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
+
+def connect_to_cassandra(username: str, password: str, keyspace: str):
+    cloud_config = {
+        'secure_connect_bundle': 'path_to_secure_connect_bundle.zip'
+    }
+    auth_provider = PlainTextAuthProvider(username=username, password=password)
+    cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+    session = cluster.connect(keyspace)
+    return session
+
+def load_data_from_cassandra(session, query: str) -> pd.DataFrame:
+    rows = session.execute(query)
+    df = pd.DataFrame(list(rows))
+    return df
+
+def rename_columns(df: pd.DataFrame, new_column_names: list) -> pd.DataFrame:
+    df.columns = new_column_names
+    return df
 
 def save_object(file_path,obj):
     try:

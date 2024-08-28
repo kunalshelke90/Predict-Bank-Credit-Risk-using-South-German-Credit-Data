@@ -52,12 +52,20 @@ class ModelTrainer:
         try:
             logging.info('Splitting it into training and test input data')
             
-            X_train,y_train,X_test,y_test=(
-                train_arr[:,:-1],
-                train_arr[:,-1],
-                test_arr[:,:-1],
-                test_arr[:,-1]
-                )
+            # X_train,y_train,X_test,y_test=(
+            #     train_arr[:,:-1],
+            #     train_arr[:,-1],
+            #     test_arr[:,:-1],
+            #     test_arr[:,-1]
+            #     )
+            
+            # train_arr=np.array(train_arr)
+            # test_arr=np.array(test_arr)
+            
+            X_train=train_arr[:,:-1]
+            y_train=train_arr[:,-1]
+            X_test=test_arr[:,:-1]
+            y_test=test_arr[:,-1]
             
             warnings.filterwarnings("ignore", category=FutureWarning, module="sklearn")
             
@@ -179,7 +187,7 @@ class ModelTrainer:
             
             acc_score=accuracy_score(y_test,predicted)
             
-            return acc_score
+            return acc_score , best_model_name
             
         except Exception as e:
             raise CustomException(e,sys)

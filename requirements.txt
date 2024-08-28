@@ -12,5 +12,6 @@ xgboost
 catboost
 dagshub
 mlflow
+cassandra-driver
 
 -e .

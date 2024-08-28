@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Model</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            margin: 20px auto;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Train the Model</h1>
+    <div class="container">
+        <form action="/train" method="post">
+            <button type="submit">Train Model</button>
+        </form>
+    </div>
+    <div>
+        <h2>Best Model: {{ model }}</h2>
+        <p>Score: {{ score }}</p>
+        <p>Training Status: {{ status }}</p>
+    </div>
+</body>
+</html>
