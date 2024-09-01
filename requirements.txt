@@ -15,6 +15,6 @@ mlflow
 cassandra-driver
 prometheus_client
 dvc
-jsonify
+ipykernel
 
 -e .

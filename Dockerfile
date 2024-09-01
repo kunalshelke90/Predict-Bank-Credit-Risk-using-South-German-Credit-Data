@@ -5,6 +5,7 @@ WORKDIR /app
 
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
+
 # Copy the contents of your project to the container
 COPY . /app
 

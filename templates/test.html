@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Model</title>
+    <title>Fill Details</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -100,7 +100,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Test the Model</h1>
+        <h1>Fill Details</h1>
         <form action="/predictdata" method="post" onsubmit="submitForm(event)">
             <div class="form-group">
                 <label for="status">Status(Deutsche Marks):</label>
@@ -289,91 +289,7 @@
 
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction History</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #6dd5ed, #2193b0);
-            color: #333;
-            padding: 50px;
-        }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 30px;
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 36px;
-        }
-
-        .scrollable-table {
-            overflow-x: auto;
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #2193b0;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Prediction History</h1>
-
-        <!-- Table for history -->
-        <div class="scrollable-table">
-            <table>
-                <thead>
-                    <tr>
-                        {% for col in columns %}
-                            <th>{{ col }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if rows %}
-                        {% for row in rows %}
-                        <tr>
-                            {% for value in row.values() %}
-                                <td>{{ value }}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="{{ columns|length }}">No history data available.</td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</body>
-</html>
 
 
 

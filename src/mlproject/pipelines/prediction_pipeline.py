@@ -45,7 +45,7 @@ class CustomData:
         personal_status_sex: int,
         other_debtors: int,
         present_residence: int,
-        property: str,
+        property: int,
         age: int,
         other_installment_plans: int,
         housing: int,
@@ -53,7 +53,7 @@ class CustomData:
         job: int,
         people_liable: int,
         telephone: int,
-        foreign_worker: str,
+        foreign_worker: int,
     ):
 
         try:

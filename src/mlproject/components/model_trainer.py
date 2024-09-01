@@ -1,13 +1,7 @@
-import numpy as np
 import os
-import pandas as pd
-import seaborn as sns
-import warnings
-from sklearn.model_selection import train_test_split, GridSearchCV 
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_auc_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score,roc_auc_score, precision_score, recall_score, f1_score
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, AdaBoostClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
@@ -15,11 +9,10 @@ from catboost import CatBoostClassifier
 from src.mlproject.logger import logging
 from src.mlproject.exception import CustomException
 from dataclasses import dataclass
-from src.mlproject.utils import load_object,evalute_models,save_object
+from src.mlproject.utils import evalute_models,save_object
 import dagshub
 import mlflow
 from urllib.parse import urlparse
-import warnings
 import sys
 
 dagshub.init(repo_owner='shelkekunal90', repo_name='Predict-Bank-Credit-Risk-using-South-German-Credit-Data', mlflow=True)
@@ -50,14 +43,15 @@ class ModelTrainer:
         
     def initiate_model_trainer(self,train_arr,test_arr):
         try:
-            logging.info('Splitting it into training and test input data')
+            logging.info("Started Model Trainer")
+            logging.info('Splitting it into training and testing data')
 
             X_train=train_arr[:,:-1]
             y_train=train_arr[:,-1]
             X_test=test_arr[:,:-1]
             y_test=test_arr[:,-1]
 
-            warnings.filterwarnings("ignore", category=FutureWarning, module="sklearn")
+            # warnings.filterwarnings("ignore", category=FutureWarning, module="sklearn")
             
             models = {
                 "Logistic Regression": LogisticRegression(random_state=42),
@@ -106,6 +100,8 @@ class ModelTrainer:
                     }
                 }
             
+            logging.info("Evaluating Models")
+            
             model_report:dict=evalute_models(X_train,y_train,X_test,y_test,models,params)
             
             best_model_score=max(sorted(model_report.values()))
@@ -116,9 +112,8 @@ class ModelTrainer:
             
             best_model=models[best_model_name]
             
-            print("This is the best model:")
-            print(best_model_name)
             self.model_trainer_Config.best_model_name=best_model_name
+            logging.info(f"Best Model Found : {best_model_name}")
             
             model_names=list(params.keys())
             
@@ -158,16 +153,15 @@ class ModelTrainer:
                     mlflow.sklearn.log_model(best_model, "model", registered_model_name=actual_model)
                 else:
                     mlflow.sklearn.log_model(best_model, "model")
-            
-            
-            # if best_model_score<0.6:
-            #     raise CustomException("No Best Model Found",sys)
-            logging.info(f"Best found model for both train and test dataset")
+        
             
             save_object(
                 file_path=self.model_trainer_Config.trained_model_file_path,
                 obj=best_model
             )
+            
+            logging.info(f"Best Model Save to {self.model_trainer_Config.trained_model_file_path}")
+            
             predicted=best_model.predict(X_test)
             
             acc_score=accuracy_score(y_test,predicted)
