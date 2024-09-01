@@ -5,23 +5,49 @@ from src.mlproject.exception import CustomException
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
 import pandas as pd
-
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
+from src.mlproject.logger import logging
+load_dotenv()
 
-def connect_to_cassandra(username: str, password: str, keyspace: str):
-    cloud_config = {
-        'secure_connect_bundle': 'path_to_secure_connect_bundle.zip'
-    }
-    auth_provider = PlainTextAuthProvider(username=username, password=password)
-    cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
-    session = cluster.connect(keyspace)
-    return session
 
-def load_data_from_cassandra(session, query: str) -> pd.DataFrame:
-    rows = session.execute(query)
-    df = pd.DataFrame(list(rows))
-    return df
+def connect_to_cassandra():
+    logging.info("Connecting to Cassandra database")
+    try:
+        username = os.getenv("CASSANDRA_USER")
+        password = os.getenv("CASSANDRA_PASSWORD")
+        keyspace = os.getenv("CASSANDRA_KEYSPACE")
+        secure_bundle_path = os.getenv("CASSANDRA_SECURE_BUNDLE")
+
+        cloud_config = {
+            'secure_connect_bundle': secure_bundle_path
+        }
+        auth_provider = PlainTextAuthProvider(username=username, password=password)
+        cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider , protocol_version=4)
+        session = cluster.connect(keyspace)
+        
+        logging.info("Cassandra connection established")
+        return session
+    
+    except Exception as e:
+        logging.error(f"Failed to connect to Cassandra: {e}")
+        logging.error(f"CASSANDRA_USER: {username}")
+        logging.error(f"CASSANDRA_KEYSPACE: {keyspace}")
+        logging.error(f"CASSANDRA_SECURE_BUNDLE: {secure_bundle_path}")
+        raise CustomException(e, sys)
+
+def load_data_from_cassandra(query: str) -> pd.DataFrame:
+    logging.info("Loading data from Cassandra")
+    try:
+        session = connect_to_cassandra()
+        rows = session.execute(query)
+        df = pd.DataFrame(list(rows))
+        
+        logging.info("Data loaded from Cassandra successfully")
+        return df
+
+    except Exception as e:
+        raise CustomException(e, sys)
 
 def rename_columns(df: pd.DataFrame, new_column_names: list) -> pd.DataFrame:
     df.columns = new_column_names
@@ -59,14 +85,7 @@ def evalute_models(X_train,y_train,X_test,y_test,models,param):
             
             print(f"y_test[:5]: {y_test[:5]}")
             print(f"y_test_pred[:5]: {y_test_pred[:5]}")
-
-            
-            # # If y_test_pred might be probabilities, convert them to binary labels
-            # if y_test_pred.ndim > 1 and y_test_pred.shape[1] > 1:
-            #     y_test_pred = y_test_pred.argmax(axis=1)  # For multi-class problems
-            # elif isinstance(y_test_pred[0], float): 
-            #     y_test_pred = (y_test_pred > 0.5).astype(int)  # For binary classification
-                
+  
             train_model_score = accuracy_score(y_train, y_train_pred)
             test_model_score = accuracy_score(y_test, y_test_pred)
             
@@ -83,3 +102,4 @@ def load_object(file_path):
             return pickle.load(file_obj)
     except Exception as e:
         raise CustomException (e,sys)
+    

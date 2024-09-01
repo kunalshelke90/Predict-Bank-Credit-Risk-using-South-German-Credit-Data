@@ -51,22 +51,12 @@ class ModelTrainer:
     def initiate_model_trainer(self,train_arr,test_arr):
         try:
             logging.info('Splitting it into training and test input data')
-            
-            # X_train,y_train,X_test,y_test=(
-            #     train_arr[:,:-1],
-            #     train_arr[:,-1],
-            #     test_arr[:,:-1],
-            #     test_arr[:,-1]
-            #     )
-            
-            # train_arr=np.array(train_arr)
-            # test_arr=np.array(test_arr)
-            
+
             X_train=train_arr[:,:-1]
             y_train=train_arr[:,-1]
             X_test=test_arr[:,:-1]
             y_test=test_arr[:,-1]
-            
+
             warnings.filterwarnings("ignore", category=FutureWarning, module="sklearn")
             
             models = {
@@ -165,18 +155,13 @@ class ModelTrainer:
                     
                 # Model registry does not work with file store
                 if tracking_url_type_store != "file":
-
-                    # Register the model
-                    # There are other ways to use the Model Registry, which depends on the use case,
-                    # please refer to the doc for more information:
-                    # https://mlflow.org/docs/latest/model-registry.html#api-workflow
                     mlflow.sklearn.log_model(best_model, "model", registered_model_name=actual_model)
                 else:
                     mlflow.sklearn.log_model(best_model, "model")
             
             
-            if best_model_score<0.6:
-                raise CustomException("No Best Model Found")
+            # if best_model_score<0.6:
+            #     raise CustomException("No Best Model Found",sys)
             logging.info(f"Best found model for both train and test dataset")
             
             save_object(

@@ -6,22 +6,26 @@ logging.basicConfig(level=logging.INFO)
 
 project_name="mlproject"
 
-list_of_file=[".github/workflows/.gitkeep",
+list_of_file=[
+              ".github/workflows/main.yaml",
+              "notebook/EDA.ipynb"
               f"src/{project_name}/__init__.py",
               f"src/{project_name}/components/__init__.py",
               f"src/{project_name}/components/data_ingestion.py",
-              f"src/{project_name}/components/data_validation.py",
               f"src/{project_name}/components/data_transformation.py",
               f"src/{project_name}/components/model_trainer.py",
-              f"src/{project_name}/components/model_monitoring.py",
               f"src/{project_name}/pipelines/__init__.py",
               f"src/{project_name}/pipelines/training_pipeline.py",
               f"src/{project_name}/pipelines/prediction_pipeline.py",
               f"src/{project_name}/exception.py",
               f"src/{project_name}/logger.py",
               f"src/{project_name}/utils.py",
+              "templates/history.html",
+              "templates/index.html",
+              "templates/test.html",
+              "templates/train.html",
               "app.py",
-              "Dockerfile.py",
+              "Dockerfile",
               "requirements.txt",
               "setup.py"
               ]

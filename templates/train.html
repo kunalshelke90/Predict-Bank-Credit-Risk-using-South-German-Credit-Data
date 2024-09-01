@@ -6,25 +6,62 @@
     <title>Train Model</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            color: #ffffff;
             text-align: center;
             padding: 50px;
+            margin: 0;
         }
+
         h1 {
-            color: #333;
+            color: #ffffff;
+            font-size: 2.5em;
+            margin-bottom: 30px;
         }
+
         .container {
             margin: 20px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 50%;
         }
+
         button {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            background-color: #28a745;
+            background-color: #ff6b6b;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff4a4a;
+        }
+
+        .status-container {
+            margin-top: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 5px 0;
         }
     </style>
 </head>
@@ -35,7 +72,7 @@
             <button type="submit">Train Model</button>
         </form>
     </div>
-    <div>
+    <div class="status-container">
         <h2>Best Model: {{ model }}</h2>
         <p>Score: {{ score }}</p>
         <p>Training Status: {{ status }}</p>

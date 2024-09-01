@@ -13,5 +13,8 @@ catboost
 dagshub
 mlflow
 cassandra-driver
+prometheus_client
+dvc
+jsonify
 
 -e .
