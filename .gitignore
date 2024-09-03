@@ -2,7 +2,6 @@
 .dvc
 /dvc
 .ebextensions
-/artifacts
 /catboost_info
 .dvcignore
 /logs
