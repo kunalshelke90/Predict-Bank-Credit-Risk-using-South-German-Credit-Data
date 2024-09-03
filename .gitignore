@@ -5,9 +5,7 @@
 /artifacts
 /catboost_info
 .dvcignore
-/prediction_history.csv
 /logs
-/secure-connect-bank-credit.zip
 .dvcignore
 /.dvcignore
 
