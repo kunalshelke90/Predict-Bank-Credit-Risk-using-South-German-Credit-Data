@@ -206,7 +206,7 @@ def history_page():
         logging.info(f"Error Accessing prediction history : {str(e)}")
         return render_template('history.html', columns=[], rows=[])
         
-# if __name__ == '__main__':
-#     app.run()
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8080) # use this for flask app only
+    app.run()
+# if __name__ == '__main__':
+#     app.run(host="127.0.0.1", port=8080) # use this for flask app only
