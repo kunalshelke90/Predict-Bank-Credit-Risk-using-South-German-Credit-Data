@@ -209,4 +209,5 @@ def history_page():
 # if __name__ == '__main__':
 #     app.run()
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000) # use this for flask app only
+    app.run(host="0.0.0.0", port=8080) # use this for flask app only
+
