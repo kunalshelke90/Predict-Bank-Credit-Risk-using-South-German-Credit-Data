@@ -88,7 +88,7 @@ jobs:
           
       - name: Run Docker Image to serve users
         run: |
-         docker run -d -p 80:8080 --ipc="host" --name=mltest \
+         docker run -d -p 80:8080 --ipc="host" --name=mltests \
            -e CASSANDRA_USER=${{ secrets.CASSANDRA_USER }} \
            -e CASSANDRA_PASSWORD=${{ secrets.CASSANDRA_PASSWORD }} \
            -e CASSANDRA_KEYSPACE=${{ secrets.CASSANDRA_KEYSPACE }} \
