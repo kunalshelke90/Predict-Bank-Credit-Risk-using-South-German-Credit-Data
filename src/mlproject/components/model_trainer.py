@@ -17,11 +17,11 @@ import sys
 from dotenv import load_dotenv
 load_dotenv()
 
-# dagshub.init(
-#     repo_owner=os.getenv('DAGSHUB_REPO_OWNER'),
-#     repo_name=os.getenv('DAGSHUB_REPO_NAME'),
-#     mlflow=os.getenv('DAGSHUB_MLFLOW') == 'True'
-# )
+dagshub.init(
+    repo_owner=os.getenv('DAGSHUB_REPO_OWNER'),
+    repo_name=os.getenv('DAGSHUB_REPO_NAME'),
+    mlflow=os.getenv('DAGSHUB_MLFLOW') == 'True'
+)
 
 @dataclass
 class ModelTrainerConfig:
@@ -131,33 +131,33 @@ class ModelTrainer:
             
             #mlflow
             
-            # mlflow.set_registry_uri(os.getenv('MLFLOW_REGISTRY_URI'))
+            mlflow.set_registry_uri(os.getenv('MLFLOW_REGISTRY_URI'))
 
-            # tracking_url_type_store =urlparse(mlflow.get_tracking_uri()).scheme
+            tracking_url_type_store =urlparse(mlflow.get_tracking_uri()).scheme
             
-            # with mlflow.start_run(nested=True):
+            with mlflow.start_run(nested=True):
                 
-            #     predicted_qualities=best_model.predict(X_test)
+                predicted_qualities=best_model.predict(X_test)
                 
-            #     (accuracy, precision, recall, f1, roc_auc) = self.eval_metrics(y_test, predicted_qualities)
+                (accuracy, precision, recall, f1, roc_auc) = self.eval_metrics(y_test, predicted_qualities)
                 
-            #     # mlflow.log_param(best_params)
-            #     for param_name, param_value in best_params.items():
-            #         mlflow.log_param(param_name, param_value)
+                # mlflow.log_param(best_params)
+                for param_name, param_value in best_params.items():
+                    mlflow.log_param(param_name, param_value)
                 
-            #     mlflow.log_metric("accuracy",accuracy)
-            #     mlflow.log_metric("precision",precision)
-            #     mlflow.log_metric("recall",recall)
-            #     mlflow.log_metric("f1",f1)
+                mlflow.log_metric("accuracy",accuracy)
+                mlflow.log_metric("precision",precision)
+                mlflow.log_metric("recall",recall)
+                mlflow.log_metric("f1",f1)
                 
-            #     if roc_auc is not None:
-            #         mlflow.log_metric("roc_auc", roc_auc)
+                if roc_auc is not None:
+                    mlflow.log_metric("roc_auc", roc_auc)
                     
-            #     # Model registry does not work with file store
-            #     if tracking_url_type_store != "file":
-            #         mlflow.sklearn.log_model(best_model, "model", registered_model_name=actual_model)
-            #     else:
-            #         mlflow.sklearn.log_model(best_model, "model")
+                # Model registry does not work with file store
+                if tracking_url_type_store != "file":
+                    mlflow.sklearn.log_model(best_model, "model", registered_model_name=actual_model)
+                else:
+                    mlflow.sklearn.log_model(best_model, "model")
         
             
             save_object(
