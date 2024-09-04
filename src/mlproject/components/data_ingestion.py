@@ -25,38 +25,38 @@ class DataIngestion:
             
             logging.info("started Reading data from database")          
             # Define your query
-            query = "SELECT * FROM bank_credit_new"
+            # query = "SELECT * FROM bank_credit_new"
 
-            # Load the data
-            data = load_data_from_cassandra(query)
+            # # Load the data
+            # data = load_data_from_cassandra(query)
 
-            # Proceed with your data processing
-            logging.info(f"{data.head()}")
-            logging.info(f"{data.columns}")
-            logging.info("Reading completed from database")
+            # # Proceed with your data processing
+            # logging.info(f"{data.head()}")
+            # logging.info(f"{data.columns}")
+            # logging.info("Reading completed from database")
             
-            df= data.drop(columns='id')
+            # df= data.drop(columns='id')
             
-            logging.info("Renaming columns from German to English")
+            # logging.info("Renaming columns from German to English")
             
-            english_column_names = ['age', 'job', 'employment_duration', 'number_credits', 'other_debtors', 
-                                    'personal_status_sex', 'foreign_worker', 'amount', 
-                                    'credit_risk', 'status', 'duration', 
-                                    'credit_history', 'people_liable', 'installment_rate', 'savings', 
-                                    'telephone', 'property', 'purpose', 'other_installment_plans', 
-                                    'housing', 'present_residence']
+            # english_column_names = ['age', 'job', 'employment_duration', 'number_credits', 'other_debtors', 
+            #                         'personal_status_sex', 'foreign_worker', 'amount', 
+            #                         'credit_risk', 'status', 'duration', 
+            #                         'credit_history', 'people_liable', 'installment_rate', 'savings', 
+            #                         'telephone', 'property', 'purpose', 'other_installment_plans', 
+            #                         'housing', 'present_residence']
             
-            df = rename_columns(df, english_column_names)
+            # df = rename_columns(df, english_column_names)
             
-            logging.info("Renaming of cloumns completed")
+            # logging.info("Renaming of cloumns completed")
             
-            target_column='credit_risk'
-            columns=[col for col in df.columns if col !=target_column] +[target_column] 
-            df=df[columns]
+            # target_column='credit_risk'
+            # columns=[col for col in df.columns if col !=target_column] +[target_column] 
+            # df=df[columns]
             
-            logging.info("Making the target column to last of table/data")
+            # logging.info("Making the target column to last of table/data")
             
-            # df=pd.read_csv(os.path.join('notebook','raw.csv'))
+            df=pd.read_csv(os.path.join('notebook','raw.csv'))
             
             logging.info(f"Dataset shape: {df.shape}")   
             logging.info(f"{df.head()}")
