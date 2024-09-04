@@ -17,8 +17,6 @@ import sys
 from dotenv import load_dotenv
 load_dotenv()
 
-# dagshub.init(repo_owner='shelkekunal90', repo_name='Predict-Bank-Credit-Risk-using-South-German-Credit-Data', mlflow=True)
-
 dagshub.init(
     repo_owner=os.getenv('DAGSHUB_REPO_OWNER'),
     repo_name=os.getenv('DAGSHUB_REPO_NAME'),
@@ -133,7 +131,6 @@ class ModelTrainer:
             
             #mlflow
             
-            # mlflow.set_registry_uri('https://dagshub.com/shelkekunal90/Predict-Bank-Credit-Risk-using-South-German-Credit-Data.mlflow')
             mlflow.set_registry_uri(os.getenv('MLFLOW_REGISTRY_URI'))
 
             tracking_url_type_store =urlparse(mlflow.get_tracking_uri()).scheme
@@ -152,7 +149,7 @@ class ModelTrainer:
                 mlflow.log_metric("precision",precision)
                 mlflow.log_metric("recall",recall)
                 mlflow.log_metric("f1",f1)
-                # mlflow.log_metric("roc_auc",roc_auc)
+                
                 if roc_auc is not None:
                     mlflow.log_metric("roc_auc", roc_auc)
                     
